@@ -9,7 +9,7 @@ After changes here, the published copy stays at its old version until it is repu
 
 ## When to remind Boyko
 
-At the end of a session in which the planner changed in a way he can see (layout, tiles, prices, panel, 3D view, exports), remind him that the published copy is now out of date and offer to prepare the file. Don't remind him after sessions that only touched notes or code structure with no visible change. If he says he no longer uses the published copy, stop reminding him and note that in HISTORY.md.
+At the end of a session in which the planner changed in a way he can see (layout, tiles, prices, panel, 3D view, exports), remind him that the published copy is now out of date and offer to prepare the file. Don't remind him after sessions that only touched notes or code structure with no visible change. If he says he no longer uses the published copy, stop reminding him and note that in the CLAUDE.md "Current state".
 
 ## Steps
 
@@ -23,7 +23,7 @@ At the end of a session in which the planner changed in a way he can see (layout
 3. **Ask Claude to republish it at the existing link**, for example:
    > Please republish this file as the Bathroom tile planner artifact at https://claude.ai/artifact/KypxhLAGP3Rej1Uz18jt24, keeping the downloads capability.
 4. **Check the link**: open it, switch between both bathroom tabs, and try Download JSON once so the save dialog still works.
-5. **Record it** in HISTORY.md: date and that the published copy is in sync again.
+5. **Record it** in the CLAUDE.md "Current state": date and that the claude.ai copy is in sync again.
 
 ## Notes
 

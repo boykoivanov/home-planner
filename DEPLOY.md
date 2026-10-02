@@ -38,7 +38,7 @@ The planner is a static site: `npm run build` makes `dist/`, no server code, no 
 ## Things to know
 
 - New address means new browser storage: combinations saved on localhost or the claude.ai link do not appear there. Move them with Download JSON / Upload JSON.
-- The claude.ai published copy stays separate. Decide whether to keep it or retire it; if retired, update REPUBLISH_ARTIFACT.md and HISTORY.md.
+- The claude.ai published copy stays separate. Decide whether to keep it or retire it; if retired, update REPUBLISH_ARTIFACT.md and CLAUDE.md.
 - Bundle is about 1.2 MB with embedded photos, fine for free tiers.
 - Repo contains `src/embedded-textures.js` (~0.5 MB generated); fine to commit.
 - No tests yet, so the only gate is `npm run check`. Could run it in CI later.

@@ -1,6 +1,24 @@
 # Bathroom tile planner — instructions for Claude Code
 
-You maintain and extend a browser app for planning the tiles of two real bathrooms. Read @HISTORY.md first: it holds the decisions made so far and the current state. Talk to the owner (Boyko) in plain language, confirm anything ambiguous before building it, and keep changes small and discrete — he works in specific, one-feature-at-a-time requests.
+You maintain and extend a browser app for planning the tiles of two real bathrooms. "Current state" and "Open points" below hold where things stand. Talk to the owner (Boyko) in plain language, confirm anything ambiguous before building it, and keep changes small and discrete — he works in specific, one-feature-at-a-time requests.
+
+## Current state (2026-10-02)
+
+- Two bathrooms as tabs, sharing one tile library of four real products from praktiker.bg (Cersanit): Wall main (Dekorina Turquoise 29.7 × 60), Wall decor (Dekorina White Matt decor 29.7 × 60, sold per piece), Floor (G1807 Cream 18.5 × 59.8, wood look), Floor decor (Patchwork Multicolor 59.8 × 59.8). Prices checked 2026-10-01.
+- Default combination in both bathrooms: **Wall main + Floor decor**. Four more per bathroom: Decor behind sink / Decor back wall, each with Floor or Floor decor.
+- Bathroom 2 shower: folding glass wall is the selected variant; walk-in fixed glass is available with four lengths (entry 40/50/60/70 cm).
+- Features: 3D view (Overview default, Doorway, Sink, From shower; door and shower door animations), ceiling height per bathroom, surfaces with tile/paint split heights, tiles to order with boxes and €, combined order for both bathrooms, JSON download/upload, Export to Blender, tile photos with mirror/rotate variations.
+- Live on GitHub Pages (see "Deployment"). The claude.ai copy was last republished 2026-10-02 and is behind.
+
+## Open points
+
+- Bathroom 2 walk-in entry is only 40 cm with the 78 cm glass; the owner has not chosen a length yet.
+- Bathroom 1: the Floor tile is R9 (dry areas); worth checking before using it inside the shower.
+- Folding glass wall sizes are estimated (2 × 58 cm); match them to the real Armonia Duo Nero product sheet when available.
+- Keep or retire the claude.ai copy now that GitHub Pages is live.
+- Mobile performance: shadows are now updated only when they change and touch screens get lighter rendering; if it still lags on phones, next steps are cheaper shadow filtering (`PCFShadowMap`, 256 px maps) and fewer shadow-casting spots on touch screens.
+- Possible: more rooms later (the repo is named `home-planner` for that reason).
+- No automated tests. A good first refactor: move `computeQty`, `forCells` and the room definitions into modules with unit tests.
 
 ## Run and check
 
@@ -46,17 +64,22 @@ There are no automated tests yet. After a change, open the dev server and verify
 - Surfaces are unions of rectangles in a local (u, v) frame; quantities and textures both come from the same rects, so geometry and counts can't drift apart.
 - Name new 3D objects through `F.label('Name')` before creating them so the Blender export stays readable.
 - three.js is pinned to **0.128.0** (r128). Don't upgrade casually: lighting, colour management and the exporter API change between versions.
-- Prices come from the product pages linked in each tile (praktiker.bg). To refresh prices, fetch the page, update `price` and `priceCheckedAt`, and tell the owner what changed.
+- Prices come from the product pages linked in each tile (praktiker.bg). To refresh prices, fetch the page, update `price` and `priceCheckedAt`, and tell the owner what changed. The shop's image server can't be reached from Claude's sandbox, so tile photos are downloaded by the owner and put in `public/textures/`.
+- Shadows are not redrawn every frame (`renderer.shadowMap.autoUpdate=false`, for phones). Anything that moves or changes a shadow-casting object must set `renderer.shadowMap.needsUpdate=true` (as `buildRoom`, the door and the shower glass do).
+- No third-party requests from the page: no CDNs, analytics or web fonts from other hosts. The font is self-hosted (`@fontsource-variable/instrument-sans`); outside links need `rel="noopener noreferrer nofollow"`. The page is `noindex` and has `referrer: no-referrer` (see `index.html`).
 - Keep UI text plain and short; no jargon in labels.
 
-## The published version
+## Deployment
 
-There is also a published copy of the planner on claude.ai that you cannot update from here. REPUBLISH_ARTIFACT.md explains the flow and when to remind Boyko about it; follow it at the end of any session with visible changes to the planner.
+- **GitHub Pages (live)**: https://boykoivanov.github.io/home-planner/, public repo `boykoivanov/home-planner` (Boyko's personal GitHub account). Every push to `main` runs `.github/workflows/pages.yml` (`npm ci`, `npm run check`, deploy `dist`), so run `npm run check` before pushing. `vite.config.js` uses a relative `base: './'` so it works under `/home-planner/`. DEPLOY.md has the Vercel comparison.
+- **Git identity**: the machine's default is the work account. This repo is wired to the personal one: remote `git@github-personal:boykoivanov/home-planner.git` (SSH host alias with its own key) and commits as `boykoivanov@duck.com` (GitHub blocks pushes that expose the private gmail). `git personal` / `git work` / `git whoami` are global aliases that set the identity in the current repo. Don't use `gh auth login` for the personal account; it would change the active `gh` account for every session.
+- **claude.ai copy**: a published copy also exists on claude.ai that you cannot update from here. REPUBLISH_ARTIFACT.md explains the flow and when to remind Boyko about it.
+- Saved combinations and photos belong to each address separately (localhost, GitHub Pages, claude.ai). Move them with Download / Upload JSON.
 
 ## Before you finish a session
 
-Update HISTORY.md: rewrite "Current state" if it changed, and add a dated entry to the log (what was asked, what changed, anything left open). Keep entries to a few lines. If the planner changed visibly, remind Boyko that the published copy is out of date (see REPUBLISH_ARTIFACT.md).
+Update "Current state" and "Open points" above if they changed (git history is the log). If the planner changed visibly, remind Boyko that the claude.ai copy is out of date (see REPUBLISH_ARTIFACT.md). Never `git push` without confirming remote and branch with Boyko first.
 
 ## Commit messages
 
-Conventional Commits, enforced by `commitlint` through the husky `commit-msg` hook (same rules as hubflow-react): `type(scope): subject`, types `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`; lines up to 180 characters. Pushing `main` deploys to GitHub Pages (see DEPLOY.md), so run `npm run check` first.
+Conventional Commits, enforced by `commitlint` through the husky `commit-msg` hook (same rules as hubflow-react): `type(scope): subject`, types `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`; lines up to 180 characters.
