@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter.js';
 import { EMBEDDED_TEXTURES } from './embedded-textures.js';
+import '@fontsource-variable/instrument-sans/wght.css';
 import './style.css';
 window.__GLTFExporter = GLTFExporter;
 (function(){
