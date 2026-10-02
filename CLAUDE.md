@@ -16,7 +16,7 @@ You maintain and extend a browser app for planning the tiles of two real bathroo
 - Bathroom 1: the Floor tile is R9 (dry areas); worth checking before using it inside the shower.
 - Folding glass wall sizes are estimated (2 × 58 cm); match them to the real Armonia Duo Nero product sheet when available.
 - Keep or retire the claude.ai copy now that GitHub Pages is live.
-- Mobile performance: shadows are now updated only when they change and touch screens get lighter rendering; if it still lags on phones, next steps are cheaper shadow filtering (`PCFShadowMap`, 256 px maps) and fewer shadow-casting spots on touch screens.
+- Mobile performance: shadows update only when they change, and touch screens get lighter rendering (no antialiasing, pixel ratio 1.5, cheaper shadow filtering, 256 px shadow maps). If it still lags on phones, next step is fewer shadow-casting spots on touch screens.
 - Possible: more rooms later (the repo is named `home-planner` for that reason).
 - No automated tests. A good first refactor: move `computeQty`, `forCells` and the room definitions into modules with unit tests.
 

@@ -561,6 +561,7 @@ function computeQty(c){
 const canvas=$('#gl');
 let renderer;
 const touchScreen=window.matchMedia('(pointer:coarse)').matches;   // phones and tablets: lighter rendering
+const SHADOW_SIZE=touchScreen?256:512;   // shadow map size per ceiling spot
 try{
   renderer=new THREE.WebGLRenderer({canvas, antialias:!touchScreen});
 }catch(e){
@@ -582,7 +583,7 @@ if(renderer){
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,touchScreen?1.5:2));
   renderer.outputEncoding=THREE.sRGBEncoding;
   renderer.shadowMap.enabled=true;
-  renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type=touchScreen?THREE.PCFShadowMap:THREE.PCFSoftShadowMap;   // cheaper shadow filtering on touch screens
   renderer.shadowMap.autoUpdate=false;   // shadows only change when the room is rebuilt or the door / shower glass moves; those places set needsUpdate
   scene.add(new THREE.HemisphereLight(0xffffff,0xb9b1a5,0.5));
   scene.add(new THREE.AmbientLight(0xffffff,0.2));
@@ -625,7 +626,7 @@ if(renderer){
       curLabel='CeilingSpot_Light';
       const sp=nameIt(new THREE.SpotLight(0xfff3e0,0.24,520,1.05,0.85,1));
       sp.position.set(x,H-1.5,z); sp.target.position.set(x,0,z);
-      sp.castShadow=true; sp.shadow.mapSize.set(512,512); sp.shadow.camera.near=2; sp.shadow.camera.far=400; sp.shadow.bias=-0.003; sp.shadow.radius=3;
+      sp.castShadow=true; sp.shadow.mapSize.set(SHADOW_SIZE,SHADOW_SIZE); sp.shadow.camera.near=2; sp.shadow.camera.far=400; sp.shadow.bias=-0.003; sp.shadow.radius=3;
       room.add(sp); room.add(sp.target);
       curLabel='CeilingSpot'; cyl(4.6,4.6,.5,mCeramic,x,H-.25,z).castShadow=false;
       cyl(3.4,3.4,.6,mLamp,x,H-.35,z).castShadow=false;
