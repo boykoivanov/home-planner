@@ -56,3 +56,7 @@ There is also a published copy of the planner on claude.ai that you cannot updat
 ## Before you finish a session
 
 Update HISTORY.md: rewrite "Current state" if it changed, and add a dated entry to the log (what was asked, what changed, anything left open). Keep entries to a few lines. If the planner changed visibly, remind Boyko that the published copy is out of date (see REPUBLISH_ARTIFACT.md).
+
+## Commit messages
+
+Conventional Commits, enforced by `commitlint` through the husky `commit-msg` hook (same rules as hubflow-react): `type(scope): subject`, types `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`; lines up to 180 characters. Pushing `main` deploys to GitHub Pages (see DEPLOY.md), so run `npm run check` first.
