@@ -6,7 +6,9 @@
 - Default combination in both bathrooms: **Wall main + Floor decor**. Four more per bathroom: Decor behind sink / Decor back wall, each with Floor or Floor decor.
 - Bathroom 2 shower: folding glass wall selected; walk-in fixed glass available with four lengths (entry 40/50/60/70 cm).
 - Features: 3D view (Overview default, Doorway, Sink, From shower; door and shower door animations), ceiling height per bathroom, surfaces with tile/paint split heights, tiles to order with boxes and €, combined order for both bathrooms, JSON download/upload, Export to Blender (.zip with .glb + .json), tile photos with mirror/rotate variations.
-- Published copy on claude.ai is in sync with this project as of this date.
+- Published copy on claude.ai is in sync with this project as of 2026-10-02 (before the GitHub Pages work; not updated since).
+- Live on GitHub Pages: https://boykoivanov.github.io/home-planner/ (public repo `boykoivanov/home-planner`, personal account). Every push to `main` redeploys via `.github/workflows/pages.yml`. See DEPLOY.md.
+- Commits follow Conventional Commits, enforced by commitlint + husky.
 
 ## Open points
 
@@ -15,7 +17,12 @@
 - Folding glass wall sizes are estimated (2 × 58 cm); match them to the real Armonia Duo Nero product sheet when available.
 - No automated tests. A good first refactor: move `computeQty`, `forCells` and the room definitions into modules with unit tests.
 
+- Saved combinations are per address: the GitHub Pages site starts empty; move combinations with Download/Upload JSON.
+- Decide whether to keep the claude.ai copy now that Pages is live.
+- The repo is named `home-planner` because more rooms will be added later.
+
 ## Log
 
 - **2026-10-01** Built the three.js planner for Bathroom 1 (267 × 156, 280 cm), split into this Vite project. Toilet box made floor to ceiling. Added the four shop tiles and their cropped photos (the shop's image server can't be reached from Claude's sandbox, so photos were downloaded by the owner). Switched ordering from worst case to area + waste. Overview became the default view. Shower: single fixed glass, no door; shower floor extended to the Entrance wall. Six ceiling spots. Ceiling height control (260/270/280 + free input). JSON download/upload with full tile data and photos.
 - **2026-10-02** Added Bathroom 2 (310 × 145) with ventilation box, pipe box and 90 cm toilet box; tabs per bathroom and a combined order. Default combination Wall main + Floor decor. Bathroom 2 shower variants: sliding door → folding door → full-length folding glass wall hinged at the Entrance wall (Armonia Duo Nero style); walk-in glass cut around the toilet box with selectable length. Shower glass 10% darker. Added Export to Blender, the single-file build and these handoff notes.
+- **2026-10-02** Deployed to GitHub Pages. Set up the personal GitHub account on this machine (SSH key + `github-personal` host alias, `git personal` / `git work` / `git whoami` aliases, commits as boykoivanov@duck.com because GitHub blocks pushes that expose the private gmail). Created public repo `home-planner`, relative `base` in `vite.config.js`, Pages workflow, commitlint + husky (same rules as hubflow-react). Left open: keep or retire the claude.ai copy.

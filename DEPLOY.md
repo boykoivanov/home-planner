@@ -1,6 +1,6 @@
 # Deploying the planner (plan)
 
-Status: plan only, nothing set up yet.
+Status: done. Live at https://boykoivanov.github.io/home-planner/ (GitHub Pages, public repo boykoivanov/home-planner, deployed by .github/workflows/pages.yml on push to main). The text below is the original plan.
 
 The planner is a static site: `npm run build` makes `dist/`, no server code, no database. Any free static host works. Saved combinations and photos live in each visitor's browser (`localStorage` / IndexedDB), so nothing needs a backend.
 
