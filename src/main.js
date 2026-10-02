@@ -560,8 +560,9 @@ function computeQty(c){
 /* ---------------- three.js scene ---------------- */
 const canvas=$('#gl');
 let renderer;
+const touchScreen=window.matchMedia('(pointer:coarse)').matches;   // phones and tablets: lighter rendering
 try{
-  renderer=new THREE.WebGLRenderer({canvas, antialias:true});
+  renderer=new THREE.WebGLRenderer({canvas, antialias:!touchScreen});
 }catch(e){
   $('#viewer').insertAdjacentHTML('beforeend','<div class="glerr">This browser could not start 3D graphics (WebGL). The quantities on the right still work.</div>');
 }
@@ -578,10 +579,11 @@ const sliders=[];        // shower door animation callbacks (0 closed → 1 open
 let showerOpen=false, showerAmt=0;
 
 if(renderer){
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,touchScreen?1.5:2));
   renderer.outputEncoding=THREE.sRGBEncoding;
   renderer.shadowMap.enabled=true;
   renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  renderer.shadowMap.autoUpdate=false;   // shadows only change when the room is rebuilt or the door / shower glass moves; those places set needsUpdate
   scene.add(new THREE.HemisphereLight(0xffffff,0xb9b1a5,0.5));
   scene.add(new THREE.AmbientLight(0xffffff,0.2));
   const maxAniso=renderer.capabilities.getMaxAnisotropy();
@@ -678,7 +680,7 @@ if(renderer){
     curLabel='Door_Pivot'; doorPivot=nameIt(new THREE.Group()); doorPivot.position.set(sgn>0?dx0:dx1,0,D); doorPivot.userData.sgn=sgn; doorPivot.rotation.y=doorAng*sgn; room.add(doorPivot);
     curLabel='Door'; box(dw-1,DH-2,4,mDoor,sgn*dw/2,(DH-2)/2,2,doorPivot);
     curLabel='DoorHandle'; box(13,2,2,mChrome,sgn*(dw-10),100,-2.2,doorPivot); box(5,5,1,mChrome,sgn*(dw-5),100,-.4,doorPivot);
-    dirty=true;
+    renderer.shadowMap.needsUpdate=true; dirty=true;
   };
 }
 
@@ -789,10 +791,10 @@ function loop(){
   if(!renderer) return;
   stepKeys();
   const goal=doorOpen?1.45:0;
-  if(Math.abs(doorAng-goal)>0.001){ doorAng = reduceMotion? goal : doorAng+(goal-doorAng)*0.15; if(Math.abs(doorAng-goal)<0.002) doorAng=goal; doorPivot.rotation.y=doorAng*(doorPivot.userData.sgn||1); dirty=true; }
+  if(Math.abs(doorAng-goal)>0.001){ doorAng = reduceMotion? goal : doorAng+(goal-doorAng)*0.15; if(Math.abs(doorAng-goal)<0.002) doorAng=goal; doorPivot.rotation.y=doorAng*(doorPivot.userData.sgn||1); renderer.shadowMap.needsUpdate=true; dirty=true; }
   const sg=showerOpen?1:0;
   if(Math.abs(showerAmt-sg)>0.001){ showerAmt = reduceMotion? sg : showerAmt+(sg-showerAmt)*0.12; if(Math.abs(showerAmt-sg)<0.003) showerAmt=sg;
-    sliders.forEach(fn=>fn(showerAmt)); dirty=true; }
+    sliders.forEach(fn=>fn(showerAmt)); renderer.shadowMap.needsUpdate=true; dirty=true; }
   if(!dirty) return;
   dirty=false; updateCamera(); renderer.render(scene,camera);
 }
