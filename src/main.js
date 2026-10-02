@@ -752,6 +752,23 @@ canvas.addEventListener('pointerup',endDrag); canvas.addEventListener('pointerca
 canvas.addEventListener('wheel',e=>{ e.preventDefault();
   if(view.mode==='in') view.fov=clamp(view.fov+e.deltaY*0.03,35,100); else view.odist=clamp(view.odist+e.deltaY*0.4,260,1000);
   dirty=true; },{passive:false});
+// zoom and full screen buttons (shown on touch screens only, see .zoombar in style.css)
+function zoomBy(dir){   // dir: +1 zoom in, -1 zoom out
+  if(view.mode==='in') view.fov=clamp(view.fov-dir*10,35,100); else view.odist=clamp(view.odist*(dir>0?0.85:1/0.85),260,1000);
+  dirty=true;
+}
+$('#zoomIn').addEventListener('click',()=>zoomBy(1));
+$('#zoomOut').addEventListener('click',()=>zoomBy(-1));
+const fsEl=$('#viewer'), fsBtn=$('#fsBtn');
+const fsRequest=fsEl.requestFullscreen||fsEl.webkitRequestFullscreen;
+const fsActive=()=>document.fullscreenElement||document.webkitFullscreenElement;
+if(!fsRequest) fsBtn.hidden=true;   // e.g. iPhone Safari has no full screen for pages
+fsBtn.addEventListener('click',()=>{
+  if(fsActive()) (document.exitFullscreen||document.webkitExitFullscreen).call(document);
+  else fsRequest.call(fsEl);
+});
+const fsChanged=()=>{ const on=!!fsActive(); fsBtn.setAttribute('aria-pressed',String(on)); fsBtn.setAttribute('aria-label',on?'Exit full screen':'Full screen'); };
+document.addEventListener('fullscreenchange',fsChanged); document.addEventListener('webkitfullscreenchange',fsChanged);
 const keys=new Set();
 window.addEventListener('keydown',e=>{
   if(/INPUT|SELECT|TEXTAREA/.test(document.activeElement?.tagName||'')) return;
@@ -784,7 +801,7 @@ function resize(){
   camera.aspect=Math.max(1,r.width)/Math.max(1,r.height); dirty=true;
 }
 if(window.ResizeObserver) new ResizeObserver(resize).observe($('#viewer')); else window.addEventListener('resize',resize);
-if(window.matchMedia('(hover:none)').matches) $('#hint').textContent='Drag to look around. Pick a viewpoint below.';
+if(window.matchMedia('(hover:none)').matches) $('#hint').textContent='Drag to look around. Use + and − to zoom. Pick a viewpoint below.';
 
 function loop(){
   requestAnimationFrame(loop);

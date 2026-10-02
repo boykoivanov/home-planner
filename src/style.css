@@ -42,6 +42,11 @@ body{height:100%;margin:0;background:var(--bg);color:var(--ink);
 .seg button[hidden]{display:none}
 .seg button[aria-pressed="true"]{background:#f3f6f6;color:#17242a}
 .seg button:focus-visible{outline:2px solid #9fb6f5;outline-offset:1px}
+.zoombar{display:none;position:absolute;right:14px;top:50%;transform:translateY(-50%);flex-direction:column}
+.zoombar button{width:42px;height:42px;padding:0;font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center}
+@media (pointer:coarse){.zoombar{display:flex}}
+#viewer:fullscreen{height:100%}
+#viewer:-webkit-full-screen{height:100%}
 .hint{position:absolute;top:12px;left:14px;font-size:12.5px;color:#d5dddf;background:rgba(20,26,29,.6);padding:5px 10px;border-radius:8px;pointer-events:none;max-width:calc(100% - 28px)}
 .combo-now{position:absolute;top:12px;right:14px;font-size:13px;font-weight:600;color:#17242a;background:#f3f6f6;padding:5px 11px;border-radius:8px;pointer-events:none}
 .glerr{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#dfe6e8;padding:24px;text-align:center}

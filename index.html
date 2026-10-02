@@ -13,6 +13,13 @@
     <canvas id="gl" tabindex="0" aria-label="3D view of the bathroom"></canvas>
     <div class="hint" id="hint">Drag to look around. W A S D or arrow keys to walk, scroll to zoom.</div>
     <div class="combo-now" id="comboNow"></div>
+    <div class="seg zoombar" id="zoombar" role="group" aria-label="Zoom and full screen">
+      <button id="zoomIn" aria-label="Zoom in">+</button>
+      <button id="zoomOut" aria-label="Zoom out">&minus;</button>
+      <button id="fsBtn" aria-label="Full screen" aria-pressed="false">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6V2h4M12 2h4v4M16 12v4h-4M6 16H2v-4"/></svg>
+      </button>
+    </div>
     <div class="viewbar">
       <div class="seg" id="views" role="group" aria-label="Viewpoint">
         <button data-view="door" aria-pressed="false">Doorway</button>
