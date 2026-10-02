@@ -20,6 +20,5 @@ Requires Node.js 18 or newer.
 - public/textures/           tile photos; see public/textures/README.md
 - CLAUDE.md                  instructions and current state for Claude Code
 - DEPLOY.md                  hosting notes (GitHub Pages)
-- REPUBLISH_ARTIFACT.md      how to update the published copy on claude.ai
 
 Combinations and uploaded tile photos are saved in the browser (localStorage and IndexedDB) for this address only.

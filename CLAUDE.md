@@ -8,14 +8,13 @@ You maintain and extend a browser app for planning the tiles of two real bathroo
 - Default combination in both bathrooms: **Wall main + Floor decor**. Four more per bathroom: Decor behind sink / Decor back wall, each with Floor or Floor decor.
 - Bathroom 2 shower: folding glass wall is the selected variant; walk-in fixed glass is available with four lengths (entry 40/50/60/70 cm).
 - Features: 3D view (Overview default, Doorway, Sink, From shower; door and shower door animations), ceiling height per bathroom, surfaces with tile/paint split heights, tiles to order with boxes and €, combined order for both bathrooms, JSON download/upload, Export to Blender, tile photos with mirror/rotate variations.
-- Live on GitHub Pages (see "Deployment"). The claude.ai copy was last republished 2026-10-02 and is behind.
+- Live on GitHub Pages (see "Deployment"). The old claude.ai copy is retired and no longer updated.
 
 ## Open points
 
 - Bathroom 2 walk-in entry is only 40 cm with the 78 cm glass; the owner has not chosen a length yet.
 - Bathroom 1: the Floor tile is R9 (dry areas); worth checking before using it inside the shower.
 - Folding glass wall sizes are estimated (2 × 58 cm); match them to the real Armonia Duo Nero product sheet when available.
-- Keep or retire the claude.ai copy now that GitHub Pages is live.
 - Mobile performance: shadows update only when they change, and touch screens get lighter rendering (no antialiasing, pixel ratio 1.5, cheaper shadow filtering, 256 px shadow maps). If it still lags on phones, next step is fewer shadow-casting spots on touch screens.
 - Possible: more rooms later (the repo is named `home-planner` for that reason).
 - No automated tests. A good first refactor: move `computeQty`, `forCells` and the room definitions into modules with unit tests.
@@ -26,7 +25,7 @@ You maintain and extend a browser app for planning the tiles of two real bathroo
 npm install
 npm run dev            # http://localhost:5173, reloads on save
 npm run check          # syntax check + production build; run before saying a change is done
-npm run build:single   # dist-single/index.html — one self-contained page for sharing or republishing
+npm run build:single   # dist-single/index.html — one self-contained page for sending to someone
 ```
 
 There are no automated tests yet. After a change, open the dev server and verify by hand: both bathroom tabs, the four viewpoints, the change itself, the "Tiles to order" numbers, and JSON download/upload if the data model was touched.
@@ -73,12 +72,12 @@ There are no automated tests yet. After a change, open the dev server and verify
 
 - **GitHub Pages (live)**: https://boykoivanov.github.io/home-planner/, public repo `boykoivanov/home-planner` (Boyko's personal GitHub account). Every push to `main` runs `.github/workflows/pages.yml` (`npm ci`, `npm run check`, deploy `dist`), so run `npm run check` before pushing. `vite.config.js` uses a relative `base: './'` so it works under `/home-planner/`. DEPLOY.md has the Vercel comparison.
 - **Git identity**: the machine's default is the work account. This repo is wired to the personal one: remote `git@github-personal:boykoivanov/home-planner.git` (SSH host alias with its own key) and commits as `boykoivanov@duck.com` (GitHub blocks pushes that expose the private gmail). `git personal` / `git work` / `git whoami` are global aliases that set the identity in the current repo. Don't use `gh auth login` for the personal account; it would change the active `gh` account for every session.
-- **claude.ai copy**: a published copy also exists on claude.ai that you cannot update from here. REPUBLISH_ARTIFACT.md explains the flow and when to remind Boyko about it.
-- Saved combinations and photos belong to each address separately (localhost, GitHub Pages, claude.ai). Move them with Download / Upload JSON.
+- **claude.ai copy**: retired (2026-10-02). It stays online frozen at its old version until Boyko deletes it on claude.ai. Don't remind him to republish.
+- Saved combinations and photos belong to each address separately (localhost, GitHub Pages). Move them with Download / Upload JSON.
 
 ## Before you finish a session
 
-Update "Current state" and "Open points" above if they changed (git history is the log). If the planner changed visibly, remind Boyko that the claude.ai copy is out of date (see REPUBLISH_ARTIFACT.md). Never `git push` without confirming remote and branch with Boyko first.
+Update "Current state" and "Open points" above if they changed (git history is the log). Never `git push` without confirming remote and branch with Boyko first.
 
 ## Commit messages
 
