@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bathroom tile planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <div id="viewer">
+    <canvas id="gl" tabindex="0" aria-label="3D view of the bathroom"></canvas>
+    <div class="hint" id="hint">Drag to look around. W A S D or arrow keys to walk, scroll to zoom.</div>
+    <div class="combo-now" id="comboNow"></div>
+    <div class="viewbar">
+      <div class="seg" id="views" role="group" aria-label="Viewpoint">
+        <button data-view="door" aria-pressed="false">Doorway</button>
+        <button data-view="sink" aria-pressed="false">Sink</button>
+        <button data-view="shower" aria-pressed="false">From shower</button>
+        <button data-view="over" aria-pressed="true">Overview</button>
+      </div>
+      <div class="seg">
+        <button id="doorBtn" aria-pressed="false">Door open</button>
+        <button id="showerBtn" aria-pressed="false" hidden>Shower door open</button>
+      </div>
+    </div>
+  </div>
+
+  <aside id="panel">
+    <div class="ph">
+      <h1>Bathroom tile planner</h1>
+      <div class="rtabs" id="roomTabs" role="tablist" aria-label="Bathrooms"></div>
+      <p id="roomSize">267 × 156 cm floor, 280 cm to the ceiling</p>
+    </div>
+    <section class="blk">
+      <h2>Ceiling height</h2>
+      <div class="crow" id="roomCtl"></div>
+    </section>
+    <section class="blk" id="layoutBlk" hidden>
+      <h2>Shower</h2>
+      <div class="crow" id="layoutCtl"></div>
+    </section>
+    <section class="blk">
+      <h2>Combinations</h2>
+      <div class="combos" id="combos"></div>
+      <div class="crow" id="comboCtl"></div>
+      <p class="note" id="comboMsg" role="status"></p>
+    </section>
+    <section class="blk">
+      <h2>Tiles to order</h2>
+      <div id="qty"></div>
+    </section>
+    <section class="blk">
+      <h2>Both bathrooms together</h2>
+      <div id="qtyAll"></div>
+    </section>
+    <section class="blk">
+      <h2>Surfaces</h2>
+      <p class="help">Choose a tile for each surface. To change tile or switch to paint partway up a wall, pick what goes above and set the height. Hover a row to see the surface in the view.</p>
+      <div id="surfaces"></div>
+    </section>
+    <section class="blk">
+      <h2>Tile library, shared by both bathrooms</h2>
+      <p class="help">Add a product photo of one tile face, set its real size, and it replaces the colour preview. Several photos make a mix of face variations.</p>
+      <div id="tiles"></div>
+      <button class="btn" id="addTile">Add tile</button>
+    </section>
+    <section class="blk">
+      <h2>Assumptions in this draft</h2>
+      <ul class="assume" id="assume"></ul>
+    </section>
+  </aside>
+</div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
